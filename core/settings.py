@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'usuarios',
-    'consultas'
+    'consultas',
+     'django_q',
 ]
 
 MIDDLEWARE = [
@@ -138,4 +139,18 @@ from django.contrib.messages import constants
 MESSAGE_TAGS = {
     constants.SUCCESS: 'bg-green-50 text-green-700',
     constants.ERROR: 'bg-red-50 text-red-700'
+}
+
+from decouple import config
+
+OPENAI_API_KEY = config('OPENAI_API_KEY')
+
+Q_CLUSTER = {
+    "name": "pythonando",
+    "workers": 1,
+    "retry": 200,        
+    "timeout": 180,       
+    "queue_limit": 50,
+    "orm": "default",
+    "catch_up": False,
 }

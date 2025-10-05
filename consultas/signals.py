@@ -6,11 +6,9 @@ from .tasks import transcribe_recording, summary_recording, task_rag
 
 @receiver(post_save, sender=Gravacoes)
 def signals_gravacoes_transcricao_resumos(sender, instance, created, **kwargs):
-    if created:
-        if instance.transcrever:
-            #transcribe_recording(instance.id)
-            chain = Chain()
-            chain.append(transcribe_recording, instance.id)
-            chain.append(summary_recording, instance.id)
-            chain.append(task_rag, instance.id)
-            chain.run()
+    if created and instance.transcrever:        
+        chain = Chain()
+        chain.append(transcribe_recording, instance.id)
+        chain.append(summary_recording, instance.id)
+        chain.append(task_rag, instance.id)
+        chain.run()
